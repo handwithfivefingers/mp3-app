@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { Container, Grid, GridItem } from "@chakra-ui/react";
+import { BrowserRouter as Router, useRoutes } from "react-router-dom";
+import "react-h5-audio-player/lib/styles.css";
+import { AllRoute } from "./contants/Route";
+// import MenuHeader from "./component/Header";
+import Sidebar from "./component/Sidebar";
+
+const RouteExport = () => {
+  const route = useRoutes(AllRoute);
+  return route;
+};
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <Router>
+        <Grid
+          h="100vh"
+          templateRows="repeat(2, 1fr)"
+          templateColumns="repeat(6, 1fr)"
         >
-          Learn React
-        </a>
-      </header>
+          <GridItem rowSpan={2} colSpan={1} bg="brand.200">
+            <Sidebar />
+          </GridItem>
+          <GridItem colSpan={5} bg="papayawhip" h={'80vh'}>
+            <RouteExport />
+          </GridItem>
+          <GridItem colSpan={5} bg="tomato">Footer</GridItem>
+        </Grid>
+      </Router>
     </div>
   );
 }
