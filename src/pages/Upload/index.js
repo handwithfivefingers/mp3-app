@@ -9,7 +9,9 @@ import {
   InputGroup,
   Button,
   InputRightElement,
+  Spinner,
 } from "@chakra-ui/react";
+import { UploadService } from "../../service/Upload/UploadService";
 
 export default function Upload() {
   const [files, setFiles] = useState([]);
@@ -44,10 +46,9 @@ export default function Upload() {
   //   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:3001/api/upload/cloud", {
-        name: e.target[0].value,
-      })
+    UploadService.uploadCloud({
+      name: e.target[0].value,
+    })
       .then((res) => {
         const sign = res.data;
         const formData = new FormData();
@@ -69,28 +70,31 @@ export default function Upload() {
             return JSON.parse(data);
           })
           .then(async (res) => {
-            // console.log("resss", res);
             let name = e.target[0].value;
             let url = res.secure_url;
             await handleSaveMusic(name, url);
-          });
+          })
+          .finally(() => setLoading(false));
       })
       .catch((err) => console.log(err))
-      .finally(() => setLoading(false));
+      .finally();
+    // axios
+    //   .post("http://localhost:3001/api/upload/cloud", {
+    //     name: e.target[0].value,
+    //   })
   };
 
   const handleUploadFiles = (e) => {
     setFiles(e.target.files[0]); // single files
   };
   const handleSaveMusic = (name, url) => {
-    axios
-      .post("http://localhost:3001/api/create-song", {
-        name,
-        url,
-      })
-      .then((res) => {
-        console.log(res);
-      });
+    UploadService.createSong({
+      name,
+      url,
+    }).then((res) => {
+      console.log(res);
+      alert("Upload Done...");
+    });
   };
 
   return (
@@ -151,9 +155,10 @@ export default function Upload() {
                   mt="2"
                   alignItems="center"
                   justifyContent={"flex-end"}
-                  isLoading={loading}
                 >
-                  <Button type="submit">Submit</Button>
+                  <Button type="submit" isLoading={loading}>
+                    Submit
+                  </Button>
                 </Box>
               </form>
             </Box>

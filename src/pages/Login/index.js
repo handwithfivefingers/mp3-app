@@ -51,9 +51,6 @@ const Login = () => {
                 type="email"
                 variant="flushed"
                 placeholder="Enter Email"
-
-                // value={input}
-                // onChange={handleInputChange}
               />
               <InputGroup size="md">
                 <Input
