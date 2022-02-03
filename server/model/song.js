@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+
 
 const songSchema = new mongoose.Schema(
   {
@@ -25,6 +25,14 @@ const songSchema = new mongoose.Schema(
       unique: true,
       index: true,
     },
+    duration: {
+      type: String,
+    },
+    tag: [
+      {
+        type: Number,
+      },
+    ],
   },
   { timestamps: true }
 );

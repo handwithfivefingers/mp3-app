@@ -40,6 +40,9 @@ const theme = extendTheme({
     },
   },
   breakpoints,
+  fonts: {
+    heading:  'Be Vietnam Pro',
+  },
 });
 
 ReactDOM.render(

@@ -5,26 +5,26 @@ export default function AudioPlayTrack() {
   const { playlist } = useContext(UserContext);
   const [current, setCurrent] = useState(0);
   const onNext = () => {
-    console.log('next')
     setCurrent(current >= playlist.length - 1 ? 0 : current + 1);
   };
   const onPrev = () => {
     setCurrent(current <= 0 ? playlist.length - 1 : current - 1);
   };
-  console.log(playlist)
+  // console.log('current playlist', playlist)
   return (
-    <div>
-      <AudioPlayer
-        autoPlay
-        src={playlist?.[current]?.url || ""}
-        onPlay={(e) => console.log("onPlay")}
-        header={playlist?.[current]?.songName || ""}
-        showJumpControls={false}
-        showSkipControls
-        onClickNext={onNext}
-        onClickPrevious={onPrev}
-        onEnded={onNext}
-      />
-    </div>
+    <AudioPlayer
+      autoPlay
+      src={playlist?.[current]?.url || ""}
+      onPlay={(e) => console.log("onPlay")}
+      header={playlist?.[current]?.songName?.toUpperCase() || ""}
+      showJumpControls={false}
+      showSkipControls
+      onClickNext={onNext}
+      onClickPrevious={onPrev}
+      onEnded={onNext}
+      style={{
+        borderRadius:'0 0 8px 8px'
+      }}
+    />
   );
 }

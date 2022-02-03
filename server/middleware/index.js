@@ -48,20 +48,39 @@ const storage = multer.diskStorage({
 exports.upload = multer({ storage });
 
 exports.requireSignin = (req, res, next) => {
-  if (req.headers.authorization) {
-    const token = req.headers.authorization.split(" ")[1];
-    const user = jwt.verify(token, "helloWorld");
-    req.user = user;
-  } else {
+  let token = req.cookies["app-music"];
+
+  if (!token)
     return res.status(400).json({ message: "Authorization required" });
+  else {
+    jwt.verify(token, "helloWorld", (err, decoded) => {
+      if (err) {
+        res.clearCookie();
+        return res.status(400).json({
+          message: "Authorization required",
+          error: err,
+        });
+      }
+      if (decoded) {
+        const newToken = jwt.sign({ _id: decoded._id }, "helloWorld", {
+          expiresIn: '1d',
+        });
+        res.cookie("app-music", newToken, {
+          maxAge: 900000,
+          httpOnly: true,
+        });
+        next();
+      }
+    });
   }
-  next();
 };
 
 exports.convertString = (str) => {
-  return str
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/đ/g, "d")
-    .replace(/Đ/g, "D");
+  return (
+    str
+      ?.normalize("NFD")
+      ?.replace(/[\u0300-\u036f]/g, "")
+      .replace(/đ/g, "d")
+      .replace(/Đ/g, "D") || str
+  );
 };

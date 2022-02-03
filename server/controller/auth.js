@@ -27,27 +27,36 @@ exports.signUp = async (req, res) => {
   });
 };
 
-
 exports.signIn = async (req, res) => {
   User.findOne({ username: req.body.username }).exec(async (err, data) => {
     if (err) return res.status(400).json({ error: err });
     if (data) {
-
       const authenticate = await data.authenticate(req.body.password);
       if (authenticate) {
         const token = jwt.sign({ _id: data._id }, "helloWorld", {
-          expiresIn: "1d",
+          expiresIn: '1d',
         });
         let newData = {
           _id: data._id,
           username: data.username,
           role: data.role,
         };
+        res.cookie("app-music", token, {
+          maxAge: 900000,
+          httpOnly: true,
+        });
         return res.status(200).json({
           data: newData,
-          token,
+          authenticate: true,
+          // token,
         });
       }
     }
+  });
+};
+
+exports.authenticate = async (req, res) => {
+  return res.status(200).json({
+    authenticate: true,
   });
 };

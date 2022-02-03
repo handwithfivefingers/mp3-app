@@ -3,9 +3,9 @@ const Song = require("./../model/song");
 const { getSignCloud, convertString } = require("./../middleware/index");
 
 exports.checkUpload = async (req, res) => {
+  console.log("come heeeee");
   if (!req.body.name)
     return res.status(400).json({ error: "name is not valid" });
-
   Song.findOne({
     songName: req.body.name,
   }).exec(async (err, data) => {
@@ -22,10 +22,11 @@ exports.createSongs = async (req, res) => {
     songName: req.body.name,
   }).exec(async (err, data) => {
     if (data) return res.status(400).json({ error: "Tên bài hát bị trùng" });
-
     let _song = new Song({
       songName: req.body.name,
       url: req.body.url,
+      tag: req.body.tag,
+      duration: req.body.duration || "",
       songNameEn: convertString(req.body.name),
     });
     _song.save((err, data) => {
@@ -52,7 +53,7 @@ exports.searchSongs = async (req, res) => {
           { songName: regex },
           {
             songNameEn: new RegExp(
-              convertString(req.body.search).toLowerCase(),
+              convertString(req.body.search)?.toLowerCase(),
               "i"
             ),
           },

@@ -12,44 +12,18 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { UploadService } from "../../service/Upload/UploadService";
-
+import { MusicHub } from "../../contants/Tag";
+import styles from "./styles.module.scss";
 export default function Upload() {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
-  //   const handleUpload = () => {
-  //     axios.post("/api/upload/cloud").then((res) => {
-  //       const sign = res.data;
-  //       const formData = new FormData();
-  //       let { file } = formRef.current.getFieldsValue();
-  //       let all = file?.fileList?.map((item) => {
-  //         formData.append("file", item.originFileObj);
-  //         formData.append("api_key", sign.apikey);
-  //         formData.append("timestamp", sign.timestamp);
-  //         formData.append("signature", sign.signature);
-  //         formData.append("eager", "c_pad,h_300,w_400|c_crop,h_200,w_260");
-  //         formData.append("folder", "pdf_file");
-  //         return fetch(
-  //           `https://api.cloudinary.com/v1_1/${sign.cloudname}/auto/upload`,
-  //           {
-  //             method: "POST",
-  //             body: formData,
-  //           }
-  //         )
-  //           .then((response) => {
-  //             return response.text();
-  //           })
-  //           .then((data) => {
-  //             return JSON.parse(data);
-  //           });
-  //       });
-  //     });
-  //   };
+  const [tag, setTag] = useState([]);
   const handleSubmit = (e) => {
     e.preventDefault();
     UploadService.uploadCloud({
       name: e.target[0].value,
     })
-      .then((res) => {
+      .then(async (res) => {
         const sign = res.data;
         const formData = new FormData();
         formData.append("file", files);
@@ -72,31 +46,39 @@ export default function Upload() {
           .then(async (res) => {
             let name = e.target[0].value;
             let url = res.secure_url;
-            await handleSaveMusic(name, url);
+            let duration = res.duration;
+            console.log(res);
+            await handleSaveMusic(name, url, duration);
           })
           .finally(() => setLoading(false));
       })
       .catch((err) => console.log(err))
       .finally();
-    // axios
-    //   .post("http://localhost:3001/api/upload/cloud", {
-    //     name: e.target[0].value,
-    //   })
   };
 
   const handleUploadFiles = (e) => {
     setFiles(e.target.files[0]); // single files
   };
-  const handleSaveMusic = (name, url) => {
+  const handleSaveMusic = (name, url, duration) => {
+    console.log("come here");
     UploadService.createSong({
       name,
       url,
+      duration,
+      tag: tag,
     }).then((res) => {
       console.log(res);
       alert("Upload Done...");
     });
   };
-
+  const handleClick = (item) => {
+    if (tag.includes(item.value)) {
+      let newTag = tag.filter((val) => val !== item.value);
+      setTag(newTag);
+    } else {
+      setTag([...tag, item.value]);
+    }
+  };
   return (
     <div>
       <Box
@@ -165,6 +147,13 @@ export default function Upload() {
           </Box>
         </Box>
       </Box>
+      <div className={styles.select}>
+        {MusicHub.map((item) => (
+          <div className={styles.selectItem} onClick={() => handleClick(item)}>
+            {item.name}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

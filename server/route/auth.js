@@ -2,7 +2,8 @@ const express = require("express");
 const { upload, requireSignin } = require("./../middleware/index");
 const {
   signUp,
-    signIn,
+  signIn,
+  authenticate
   //   signOut,
   //   checkUser,
   //   findUser,
@@ -15,5 +16,8 @@ const router = express.Router();
 router.post("/register", upload.none(), signUp);
 //login
 router.post("/login", upload.none(), signIn);
+
+//authenticate
+router.post("/auth", requireSignin, authenticate);
 
 module.exports = router;

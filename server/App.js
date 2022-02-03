@@ -5,6 +5,7 @@ const qs = require("query-string");
 const path = require("path");
 const mongoose = require("mongoose");
 const cors = require("cors");
+var cookieParser = require("cookie-parser");
 //Routes
 
 env.config();
@@ -24,27 +25,37 @@ mongoose
 // middleware
 
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser());
+
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:3003",
+    //
+    //
+  })
+);
 
 // Routes middleware
 app.use("/public", express.static(path.join(__dirname, "uploads")));
 
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, "build")));
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
 app.use("/api", AuthRoute);
 app.use("/api", Music);
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  // res.header("Access-Control-Allow-Origin", "*");
+  // res.header("Access-Control-Request-Headers", "POST");
   next();
 });
 // App run
-app.listen(process.env.SERVER_PORT, () => {
-  console.log(`Server is running on port ${process.env.SERVER_PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
 });
 
 // const auth = router.get('/',)
