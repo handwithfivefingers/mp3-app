@@ -30,7 +30,8 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:3003",
+    origin: ["http://localhost:3003", process.env.REACT_APP_BASE_URL],
+    // origin: ,
     //
     //
   })

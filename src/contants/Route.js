@@ -5,6 +5,7 @@ import Login from "../pages/Login";
 import SearchPage from "../pages/SearchPage";
 import Upload from "../pages/Upload";
 import { Navigate } from "react-router";
+
 export const AllRoute = (user) => [
   {
     title: "Trang chủ",

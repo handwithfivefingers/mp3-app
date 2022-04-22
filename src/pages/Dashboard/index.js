@@ -13,8 +13,10 @@ import {
 import { SearchService } from "../../service/Search/SearchService";
 import Card from "../../component/Card";
 const Dashboard = () => {
+
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     getScreenData();
   }, []);
@@ -31,6 +33,7 @@ const Dashboard = () => {
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
   };
+
   const renderSkeleton = () => {
     let xhtml = [];
     for (let i = 0; i < 4; i++) {
@@ -45,6 +48,7 @@ const Dashboard = () => {
     }
     return xhtml;
   };
+
   return (
     <>
       <Grid
@@ -61,8 +65,9 @@ const Dashboard = () => {
             </GridItem>
           );
         })}
-        <Outlet />
+      
       </Grid>
+      <Outlet />
     </>
   );
 };
