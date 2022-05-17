@@ -1,0 +1,8 @@
+.select {
+  display: block;
+  height: 42px;
+  overflow-y: auto;
+  .selectItem {
+    background: #fff;
+  }
+}

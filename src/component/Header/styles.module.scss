@@ -1,0 +1,56 @@
+.header {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  padding: 8px 12px;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  box-shadow: 0 5px 10px -10px #000;
+  background: var(--core-50);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  z-index: 1;
+  .left {
+    grid-column: 1/2;
+    display: flex;
+    flex-direction: row;
+    column-gap: 12px;
+    svg {
+      font-size: 24px;
+      // color: rgb(97, 97, 97);
+      color: var(--core-0);
+      padding: 4px;
+      // background: #ccc;
+      background: var(--core-500);
+      border-radius: 99px;
+      transition: 0.2s;
+      cursor: pointer;
+      &:hover {
+        color: var(--core-500);
+        background: var(--core-0);
+      }
+    }
+  }
+  .middle {
+    grid-column: 3/19;
+    max-width: 100%;
+    border-radius: 99px;
+    .icon {
+      svg {
+        color: var(--core-25) !important;
+      }
+    }
+    .input {
+      color: var(--core-25) !important;
+      &::placeholder {
+        color: var(--core-25) !important;
+      }
+    }
+  }
+  .right {
+    grid-column: 20/21;
+    div {
+      cursor: pointer;
+    }
+  }
+}

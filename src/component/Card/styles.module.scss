@@ -1,0 +1,39 @@
+.box {
+  .img {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    &:before {
+      // position: absolute;
+      content: "";
+      display: block;
+      padding-top: 75%;
+    }
+  }
+  transition: var(--main-transition);
+  box-shadow: var(--main-box-shadow);
+  background: var(--main-0);
+  &:hover {
+    transform: translate(0, -5px);
+    box-shadow: var(--main-box-shadow-hover);
+  }
+  .actionIcons {
+    column-gap: 12px;
+    svg {
+      transition: 0.2s;
+      font-size: 36px;
+      background-color: var(--core-500);
+      color: var(--core-25);
+      padding: 8px;
+      border-radius: 99px;
+      cursor: pointer;
+      box-shadow: var(--main-box-shadow);
+      &:hover {
+        background-color: var(--core-25);
+        color: var(--core-500);
+        box-shadow: var(--main-box-shadow-hover);
+      }
+    }
+  }
+}

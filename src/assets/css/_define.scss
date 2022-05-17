@@ -1,0 +1,31 @@
+:root {
+  --main-box-shadow: 0 2px 40px 0 rgb(0 0 0 / 7%);
+
+  --main-box-shadow-hover: rgb(45 45 45 / 5%) 0 2px 2px,
+    rgb(49 49 49 / 5%) 0 4px 4px, rgb(42 42 42 / 5%) 0 8px 8px,
+    rgb(32 32 32 / 5%) 0 16px 16px, rgb(49 49 49 / 5%) 0 32px 32px,
+    rgb(35 35 35 / 5%) 0 64px 64px;
+
+  --main-transition: box-shadow 0.3s ease-out, transform 0.3s ease-out,
+    opacity 0.2s ease-out;
+  --main-00: #fff;
+  --main-25: #eee;
+  --main-50: #e7e6e6;
+  --main-100: #c6c6c6;
+  --main-200: #919191;
+  --main-300: #6a6a6a;
+  --main-400: #5e5e5e;
+  --main-500: #303030;
+  --main-600: #000000;
+
+  // core
+  --core-0: #faeeff;
+  --core-25: #e5c8f1;
+  --core-50: #c1a5cc;
+  --core-100: #a085ab;
+  --core-200: #987da3;
+  --core-300: #91779c;
+  --core-400: #634b6e;
+  --core-500: #584163;
+  --core-600: #392343;
+}

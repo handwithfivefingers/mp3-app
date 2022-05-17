@@ -30,7 +30,7 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:3003", process.env.REACT_APP_BASE_URL],
+    origin: ["http://localhost:3002", process.env.REACT_APP_BASE_URL],
     // origin: ,
     //
     //
@@ -55,8 +55,8 @@ app.use((req, res, next) => {
   next();
 });
 // App run
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
+app.listen(3003, () => {
+  console.log(`Server is running on port 3003`);
 });
 
 // const auth = router.get('/',)
